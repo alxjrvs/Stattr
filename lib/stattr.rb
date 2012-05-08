@@ -1,4 +1,4 @@
-Statlist = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
+Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
 
 # Roll a D(sides) size die. 
 def rolld(sides)
@@ -47,9 +47,27 @@ end
 #This iterates through the Stat list and turns each stat into a key. It then rolls 3 d6's to get the starting value for that stat.
 def statroll 
     stathash = {} 
-        Statlist.each do |stat|
+        Normstats.each do |stat|
             stathash[stat] = modstat(rollmanyd(6,3))
         end
     stathash
 end
 
+
+#Classes 
+# Extend these to increase the overall functionality of your app/game! 
+
+
+class Statlist 
+attr_accessor :str, :dex, :cha, :con, :wis, :int
+@@sides = 6 
+@@dicenum = 3 
+    def initialize 
+        @str = modstat(rollmanyd(@@sides, @@dicenum))
+        @dex = modstat(rollmanyd(@@sides, @@dicenum))
+        @cha = modstat(rollmanyd(@@sides, @@dicenum))
+        @con = modstat(rollmanyd(@@sides, @@dicenum))
+        @wis = modstat(rollmanyd(@@sides, @@dicenum))
+        @int = modstat(rollmanyd(@@sides, @@dicenum))
+    end
+end
