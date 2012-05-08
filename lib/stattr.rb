@@ -71,3 +71,12 @@ attr_accessor :str, :dex, :cha, :con, :wis, :int
         @int = modstat(rollmanyd(@@sides, @@dicenum))
     end
 end
+
+class Playerchar
+attr_accessor :stats, :name
+
+    def initialize(name) 
+        @name = name
+        @stats = Statlist.new
+    end
+end
