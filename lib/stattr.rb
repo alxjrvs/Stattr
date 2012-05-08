@@ -1,19 +1,27 @@
 Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
 
-# Roll a D(sides) size die. 
-def rolld(sides)
-rand(sides) + 1  
-end
-
-
-# Rolls a number of dice of particular sizes.
-def rollmanyd(sides, dice)
-    rolls = 0 
-    (1..dice).each do |i|
-        rolls = rolls + rolld(sides)
+module Stattr
+  class Dice
+    attr_accessor :sides, :count
+    def initialize(sides=6, count=1)
+      @sides = sides
+      @count = count
     end
-rolls
-end
+
+    def self.roll(sides=6, count=1)
+      new(sides, count).roll
+    end  
+
+    def rolls
+      (1..count).map { |d| rand(sides) + 1 }
+    end
+
+    def roll
+      rolls.inject(0) { |total, d| total += d }
+    end  
+  end
+end 
+
 
 def modstat(r)
 modlist = []
@@ -48,7 +56,7 @@ end
 def statroll 
     stathash = {} 
         Normstats.each do |stat|
-            stathash[stat] = modstat(rollmanyd(6,3))
+            stathash[stat] = modstat(Stattr::Dice.roll(6,3))
         end
     stathash
 end
@@ -63,12 +71,12 @@ attr_accessor :str, :dex, :cha, :con, :wis, :int
 @@sides = 6 
 @@dicenum = 3 
     def initialize 
-        @str = modstat(rollmanyd(@@sides, @@dicenum))
-        @dex = modstat(rollmanyd(@@sides, @@dicenum))
-        @cha = modstat(rollmanyd(@@sides, @@dicenum))
-        @con = modstat(rollmanyd(@@sides, @@dicenum))
-        @wis = modstat(rollmanyd(@@sides, @@dicenum))
-        @int = modstat(rollmanyd(@@sides, @@dicenum))
+        @str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @con = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
     end
 end
 
