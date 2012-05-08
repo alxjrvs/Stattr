@@ -21,6 +21,6 @@ A class made for extending. It takes a name for an argument, and automatically g
 
 ##ToDo
 ========
-Not sure yet - what do you think, Internet? 
+- use RDOC for legitimate documentation.
 
 -- By [Alxjrvs](http://alxjrvs.com "Alxjrvs") -- 
