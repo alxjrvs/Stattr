@@ -22,32 +22,6 @@ module Stattr
     end  
   end
   
-  def modstat(r)
-modlist = []
-    case r
-    when 3
-       modlist = [r, -4]
-    when (4..5) 
-       modlist = [r, -3]
-    when (6..7)
-       modlist = [r, -2]
-    when (8..9)
-       modlist = [r, -1]
-    when (10..11)
-       modlist = [r, 0]
-    when (12..13)
-       modlist = [r, 1]
-    when (14..15)
-       modlist = [r, 2]
-    when (16..17)
-       modlist = [r, 3]
-    when 18
-       modlist = [r, 4]
-   else 
-        puts "nothing"
-    end
-modlist
-end
 
     
 
@@ -77,6 +51,32 @@ attr_accessor :str, :dex, :cha, :con, :wis, :int
         @wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
         @int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
     end
+  def modstat(r)
+  modlist = []
+    case r
+    when 3
+       modlist = [r, -4]
+    when (4..5) 
+       modlist = [r, -3]
+    when (6..7)
+       modlist = [r, -2]
+    when (8..9)
+       modlist = [r, -1]
+    when (10..11)
+       modlist = [r, 0]
+    when (12..13)
+       modlist = [r, 1]
+    when (14..15)
+       modlist = [r, 2]
+    when (16..17)
+       modlist = [r, 3]
+    when 18
+       modlist = [r, 4]
+   else 
+        puts "nothing"
+    end
+modlist
+end
 end
 
 class Playerchar
