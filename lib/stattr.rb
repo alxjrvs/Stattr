@@ -2,17 +2,15 @@ Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON']
 
 # Roll a D(sides) size die. 
 def rolld(sides)
-rand(sides) + 1  
+    rand(sides) + 1  
 end
 
 
 # Rolls a number of dice of particular sizes.
 def rollmanyd(sides, dice)
     rolls = 0 
-    (1..dice).each do |i|
-        rolls = rolls + rolld(sides)
-    end
-rolls
+    dice.times { rolls += rolld(sides) }
+    rolls
 end
 
 def modstat(r)
