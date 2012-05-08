@@ -8,7 +8,7 @@ Stattr is Creative Commons, BY-SA.
 ##Functions##
 =============
 
- rolld(sides) 
+ ###rolld(sides) 
 ---
 Fairly self explanatory, this lets you roll a die with (sides) number of sides. So, for instance, if you wanted to roll a d6, you coulld rolld(6) and it would get it for you! 
 
