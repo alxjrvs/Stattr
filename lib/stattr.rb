@@ -1,17 +1,14 @@
 $statlist = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
 
 # Roll a D(sides) size die. 
-def rollD(sides)
+def rolld(sides)
 return rand(sides) + 1  
 end
 
 
 # Rolls a number of dice of particular sizes.
-def rollmanyD(dice, sides) 
+def rollmanyd(sides, dice)
     rolls = 0 
-    #for i in (1..dice)
-        #rolls = rolls + rollD(sides)
-    #end
     (1..dice).each do |i|
         rolls = rolls + rollD(sides)
     end
