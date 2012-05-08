@@ -1,6 +1,7 @@
-Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
 
 module Stattr
+  Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
+  
   class Dice
     attr_accessor :sides, :count
     def initialize(sides=6, count=1)
@@ -20,10 +21,8 @@ module Stattr
       rolls.inject(0) { |total, d| total += d }
     end  
   end
-end 
-
-
-def modstat(r)
+  
+  def modstat(r)
 modlist = []
     case r
     when 3
@@ -88,3 +87,7 @@ attr_accessor :stats, :name
         @stats = Statlist.new
     end
 end
+
+end 
+
+
