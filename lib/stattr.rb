@@ -1,8 +1,8 @@
-$statlist = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
+Statlist = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
 
 # Roll a D(sides) size die. 
 def rolld(sides)
-return rand(sides) + 1  
+rand(sides) + 1  
 end
 
 
@@ -10,7 +10,7 @@ end
 def rollmanyd(sides, dice)
     rolls = 0 
     (1..dice).each do |i|
-        rolls = rolls + rollD(sides)
+        rolls = rolls + rolld(sides)
     end
 rolls
 end
@@ -39,7 +39,7 @@ modlist = []
    else 
         puts "nothing"
     end
-    modlist
+modlist
 end
 
     
@@ -47,8 +47,8 @@ end
 #This iterates through the Stat list and turns each stat into a key. It then rolls 3 d6's to get the starting value for that stat.
 def statroll 
     stathash = {} 
-        $statlist.each do |stat|
-            stathash[stat] = modstat(rollmanyD(3,6))
+        Statlist.each do |stat|
+            stathash[stat] = modstat(rollmanyd(6,3))
         end
     stathash
 end
