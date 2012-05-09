@@ -1,4 +1,3 @@
-
 module Stattr
   Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
   
@@ -23,7 +22,7 @@ module Stattr
   end
   
   def modstat(r)
-modlist = []
+    modlist = []
     case r
     when 3
        modlist = [r, -4]
@@ -46,48 +45,47 @@ modlist = []
    else 
         puts "nothing"
     end
-modlist
-end
+  modlist
+  end
 
     
 
 #This iterates through the Stat list and turns each stat into a key. It then rolls 3 d6's to get the starting value for that stat.
-def statroll 
-    stathash = {} 
-        Normstats.each do |stat|
-            stathash[stat] = modstat(Stattr::Dice.roll(6,3))
-        end
-    stathash
-end
+	def statroll 
+  	stathash = {} 
+    	Normstats.each do |stat|
+      	stathash[stat] = modstat(Stattr::Dice.roll(6,3))
+    	end
+  	stathash
+	end
 
 
 #Classes 
 # Extend these to increase the overall functionality of your app/game! 
 
 
-class Statlist 
-attr_accessor :str, :dex, :cha, :con, :wis, :int
-@@sides = 6 
-@@dicenum = 3 
-    def initialize 
-        @str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @con = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-    end
-end
+	class Statlist 
+  	attr_accessor :str, :dex, :cha, :con, :wis, :int
+  	@@sides = 6 
+  	@@dicenum = 3 
+  	def initialize 
+    	@str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+    	@dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+    	@cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+    	@con = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+    	@wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+    	@int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+  	end
+	end
 
-class Playerchar
-attr_accessor :stats, :name
+	class Playerchar
+  	attr_accessor :stats, :name
 
-    def initialize(name) 
-        @name = name
-        @stats = Statlist.new
-    end
-end
-
+  	def initialize(name) 
+    	@name = name
+    	@stats = Statlist.new
+  	end
+	end
 end 
 
 
