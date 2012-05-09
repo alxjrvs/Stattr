@@ -1,6 +1,6 @@
 Gem::Specification.new do |s| 
   s.name        = 'stattr'
-  s.version     = '0.0.6'
+  s.version     = '0.0.7'
   s.date        = '2012-05-07'
   s.summary     = "Stattr; Because rolling dice is hard."
   s.description = "Stattr is a Gem that includes a number of useful functions for rolling dice in a game like Dungeons and Dragons."
