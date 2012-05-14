@@ -83,7 +83,7 @@ end
 
   	def initialize(name) 
     	@name = name
-    	@stats = Statlist
+    	@stats = Statlist.new
   	end
 		
 		def new_rand
