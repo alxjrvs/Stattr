@@ -25,13 +25,13 @@ module Stattr
     
 
 #This iterates through the Stat list and turns each stat into a key. It then rolls 3 d6's to get the starting value for that stat.
-	def statroll 
-  	stathash = {} 
-    	Normstats.each do |stat|
-      	stathash[stat] = modstat(Stattr::Dice.roll(6,3))
-    	end
-  	stathash
-	end
+	#def statroll 
+    #stathash = {} 
+      #Normstats.each do |stat|
+        #stathash[stat] = modstat(Stattr::Dice.roll(6,3))
+      #end
+    #stathash
+	#end
 
 
 #Classes 
@@ -43,6 +43,14 @@ module Stattr
 		@@sides = 6 
 		@@dicenum = 3 
     def initialize 
+        @str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @con = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+        @int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+    end
+    def self.new_roll
         @str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
         @dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
         @cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
@@ -86,7 +94,9 @@ end
     	@stats = Statlist.new
   	end
 		
-		def new_rand
+		def self.re_roll(name) 
+ 			@name = name
+			@stats = Statlist.new_roll
 		end
 	end
 end 
