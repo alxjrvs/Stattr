@@ -20,9 +20,6 @@ module Stattr
       rolls.inject(0) { |total, d| total += d }
     end  
   end
-  
-
-    
 
 #This iterates through the Stat list and turns each stat into a key. It then rolls 3 d6's to get the starting value for that stat.
 	def statroll 
@@ -83,7 +80,7 @@ end
 
   	def initialize(name) 
     	@name = name
-    	@stats = Statlist
+    	@stats = Statlist.new
   	end
 		
 		def new_rand
