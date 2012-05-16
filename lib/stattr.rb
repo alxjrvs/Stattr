@@ -39,13 +39,22 @@ module Stattr
 		attr_accessor :str, :dex, :cha, :con, :wis, :int
 		@@sides = 6 
 		@@dicenum = 3 
-    def initialize 
-        @str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @con = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+    def initialize(str, dex, cha, con, wis, int) 
+        @str = str
+        @dex = dex
+        @cha = cha 
+        @con = con
+        @wis = wis
+        @int = int
+    end
+    def self.rand_stats
+				Statlist.new(
+				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
+				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
+				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
+				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
+				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
+				modstat(Stattr::Dice.roll(@@sides,@@dicenum)))
     end
   def modstat(r)
 	 	modlist = []
@@ -83,7 +92,8 @@ end
     	@stats = Statlist.new
   	end
 		
-		def new_rand
+		def self.roll_char(name)
+			 Stattr::Playerchar.create(:name => name, :stats => Stattr::Statlist.rand_stats)
 		end
 	end
 end 
