@@ -43,21 +43,12 @@ module Stattr
 		@@sides = 6 
 		@@dicenum = 3 
     def initialize(str, dex, cha, con, wis, int) 
-        @str = str
-        @dex = dex
-        @cha = cha 
-        @con = con
-        @wis = wis
-        @int = int
-    end
-    def self.rand_stats
-				Statlist.new(
-				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
-				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
-				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
-				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
-				modstat(Stattr::Dice.roll(@@sides,@@dicenum)),
-				modstat(Stattr::Dice.roll(@@sides,@@dicenum)))
+        @str = modstat(str)
+        @dex = modstat(dex) 
+        @cha = modstat(cha)
+        @con = modstat(con)
+        @wis = modstat(wis)
+        @int = modstat(int)
     end
   def modstat(r)
 	 	modlist = []
@@ -92,11 +83,20 @@ end
 
   	def initialize(name) 
     	@name = name
-    	@stats = Statlist.new
+    	@stats = Statlist.new(0,0,0,0,0,0)
   	end
 		
 		def self.roll_char(name)
-			 Stattr::Playerchar.create(:name => name, :stats => Stattr::Statlist.rand_stats)
+			char = Playerchar.new(name) 
+			char.stats = Stattr::Statlist.new(
+			Stattr::Dice.roll(6, 3),
+			Stattr::Dice.roll(6, 3),
+			Stattr::Dice.roll(6, 3),
+			Stattr::Dice.roll(6, 3),
+			Stattr::Dice.roll(6, 3),
+			Stattr::Dice.roll(6, 3)
+			)
+			
 		end
 	end
 end 
