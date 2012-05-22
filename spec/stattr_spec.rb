@@ -73,15 +73,15 @@ describe Stattr do
       s('Gimli').name.must_equal 'Gimli'
     end
 
-    it "should default to a zeroed statlist" do
+    it "should have a default statlist with only 10's" do
       frodo = s('Frodo')
 
-      frodo.stats.str.must_equal [0, -5]
-      frodo.stats.dex.must_equal [0, -5]
-      frodo.stats.cha.must_equal [0, -5]
-      frodo.stats.con.must_equal [0, -5]
-      frodo.stats.wis.must_equal [0, -5]
-      frodo.stats.int.must_equal [0, -5]
+      frodo.stats.str.must_equal [10, 0]
+      frodo.stats.dex.must_equal [10, 0]
+      frodo.stats.cha.must_equal [10, 0]
+      frodo.stats.con.must_equal [10, 0]
+      frodo.stats.wis.must_equal [10, 0]
+      frodo.stats.int.must_equal [10, 0]
     end
 
     it "should be able to roll a character" do
@@ -109,7 +109,7 @@ describe Stattr do
 
       player.characters.count.must_equal 0
 
-      player.roll_char('Aragon')
+      player.new_char('Aragon')
 
       player.characters.count.must_equal 1
     end
