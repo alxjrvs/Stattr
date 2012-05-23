@@ -1,7 +1,12 @@
+# Stattr includes some basic functions that could be used in a Tabletop RPG application
+#
+# @author Alex Jarvis
+
 module Stattr
-
+  # How many sides the most common die has 
   DICE_SIDES = 6 
-
+    
+  # Represents a single instance of the result of a dice roll  
   class Dice 
 
     attr_accessor :sides, :count
