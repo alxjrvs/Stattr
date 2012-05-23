@@ -1,91 +1,89 @@
+# Stattr includes some basic functions that could be used in a Tabletop RPG application
+#
+# @author Alex Jarvis
+
 module Stattr
-  Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
-  
+  # How many sides the most common die has 
+  DICE_SIDES = 6 
+    
+  # Represents a single instance of the result of a dice roll  
   class Dice 
+
     attr_accessor :sides, :count
-    def initialize(sides=6, count=1)
+
+    def initialize(sides=DICE_SIDES, count=1)
       @sides = sides
       @count = count
-    end
+    end #initialize
 
-    def self.roll(sides=6, count=1)
+    def self.roll(sides=DICE_SIDES, count=1)
       new(sides, count).roll
-    end  
-
+    end #self.roll
+    
     def rolls
       (1..count).map { |d| rand(sides) + 1 }
-    end
+    end #rolls
 
     def roll
       rolls.inject(0) { |total, d| total += d }
-    end  
-  end
-
-#This iterates through the Stat list and turns each stat into a key. It then rolls 3 d6's to get the starting value for that stat.
-	def statroll 
-  	stathash = {} 
-    	Normstats.each do |stat|
-      	stathash[stat] = modstat(Stattr::Dice.roll(6,3))
-    	end
-  	stathash
-	end
-
-
-#Classes 
-# Extend these to increase the overall functionality of your app/game! 
-
+    end #roll
+  end #Dice
 
 	class Statlist 
-		attr_accessor :str, :dex, :cha, :con, :wis, :int
-		@@sides = 6 
-		@@dicenum = 3 
-    def initialize 
-        @str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @con = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-    end
-  def modstat(r)
-	 	modlist = []
-  	  case r
-   		when 3
-      	modlist = [r, -4]
-    	when (4..5) 
-      	modlist = [r, -3]
-    	when (6..7)
-       	modlist = [r, -2]
-    	when (8..9)
-       	modlist = [r, -1]
-    	when (10..11)
-       	modlist = [r, 0]
-    	when (12..13)
-       	modlist = [r, 1]
-    	when (14..15)
-       	modlist = [r, 2]
-    	when (16..17)
-       	modlist = [r, 3]
-    	when 18
-       	modlist = [r, 4]
-   		else 
-        puts "nothing"
-    end
-		modlist
-	end
-end
 
-	class Playerchar
+	  attr_accessor :str, :dex, :cha, :con, :wis, :int
+
+    def initialize(str=10, dex=10, cha=10, con=10, wis=10, int=10)  # :notnew:
+      @str = modstat(str)
+      @dex = modstat(dex) 
+      @cha = modstat(cha)
+      @con = modstat(con)
+      @wis = modstat(wis)
+      @int = modstat(int)
+    end #initialize
+      
+    def modstat(r)
+      modr = ((r-10)/2).to_int
+      modlist = [r, modr]
+      modlist
+    end #modstat
+  end #StatList
+
+	class Charactersheet 
   	attr_accessor :stats, :name
 
-  	def initialize(name) 
+  	def initialize(name) # :notnew:
     	@name = name
-    	@stats = Statlist.new
-  	end
+    	@stats = Statlist.new(10,10,10,10,10,10)
+  	end #initialize 
 		
-		def new_rand
-		end
-	end
-end 
+		def self.roll_char(name)
+      char = Charactersheet.new(name) 
+      char.stats = Statlist.new(
+      Dice.roll(DICE_SIDES, 3),
+      Dice.roll(DICE_SIDES, 3),
+      Dice.roll(DICE_SIDES, 3),
+      Dice.roll(DICE_SIDES, 3),
+      Dice.roll(DICE_SIDES, 3),
+      Dice.roll(DICE_SIDES, 3)
+      )
+		  char	
+		end # self.roll_char
+	end #CharacterSheet
 
-
+  class Player 
+    attr_accessor :fname, :lname, :characters
+    
+    def initialize(fname, lname) # :notnew:
+      @fname = fname
+      @lname = lname 
+      @characters = []
+    end #initialize
+  
+    def new_char(name)
+      new_char = Charactersheet.roll_char(name)
+      self.characters << new_char 
+    end #roll_char
+  end #Player
+      
+end #Stattr
