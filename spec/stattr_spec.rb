@@ -15,10 +15,10 @@ end
 #
 describe Stattr do
 
-  # The Dice class
+  # The DiceRoll class
   #
-  describe Stattr::Dice do
-    subject { Stattr::Dice }
+  describe Stattr::DiceRoll do
+    subject { Stattr::DiceRoll }
 
     it "should default to 6 sides" do
       s.sides.must_equal 6
@@ -34,16 +34,16 @@ describe Stattr do
     end
 
     it "should roll the maximum value when Kernel#rand() is stubbed" do
-      subject.roll.must_equal 6
-      subject.roll(6,2).must_equal 12
-      subject.roll(20,2).must_equal 40
+      subject.new_roll.must_equal 6
+      subject.new_roll(6,2).must_equal 12
+      subject.new_roll(20,2).must_equal 40
     end
   end
 
-  # The Statlist class
+  # The StatList class
   #
-  describe Stattr::Statlist do
-    subject { Stattr::Statlist }
+  describe Stattr::StatList do
+    subject { Stattr::StatList }
 
     it "should initialize the list of stats in the correct order" do
       list = s(1,2,3,4,5,6)
