@@ -112,6 +112,8 @@ describe Stattr do
       player.new_char('Aragon')
 
       player.characters.count.must_equal 1
+      
+      player.characters[0].name.must_equal 'Aragon'
     end
   end
 end
