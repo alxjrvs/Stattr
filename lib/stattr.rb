@@ -3,33 +3,65 @@
 # @author Alex Jarvis
 
 module Stattr
-  # How many sides the most common die has 
+
+  # How many sides the most common die has - rewrite to fit your game. 
+  #
   DICE_SIDES = 6 
     
   # Represents a single instance of the result of a dice roll  
-  class Dice 
-
+  # 
+  class DiceRoll 
+    
+    # @attribute sides [Integer] The number of sides the dice in this roll have. 
+    #
+    # @attribute count [Integer] The number of die being rolled.
+    #
     attr_accessor :sides, :count
-
+    
+    # New instance of DiceRoll.
+    #
+    # @param [Integer] sides
+    #
+    # @param [Integer] count
+    #
+    # @return [Object] DiceRoll object
+    #
     def initialize(sides=DICE_SIDES, count=1)
       @sides = sides
       @count = count
     end #initialize
-
-    def self.roll(sides=DICE_SIDES, count=1)
+     
+    # Roll a new die. 
+    #
+    # @param [Integer] sides
+    #
+    # @param [Integer] count
+    #
+    # @return [Object] DiceRoll object 
+    #
+    def self.new_roll(sides = DICE_SIDES, count=1)
+      # make a new dice object, then roll it. 
       new(sides, count).roll
     end #self.roll
-    
+   
+    # From 1 to count, that many [sides] sided die.
+    # 
+    # @return [Integer] Gives each outcome to Roll. 
+    #
     def rolls
       (1..count).map { |d| rand(sides) + 1 }
     end #rolls
-
+    
+    # Adds the rolls from rolls together. 
+    #
+    # @return [Integer] combined rolls 
+    #
     def roll
       rolls.inject(0) { |total, d| total += d }
     end #roll
-  end #Dice
+  end #DiceRoll
 
-	class Statlist 
+	class StatList 
 
 	  attr_accessor :str, :dex, :cha, :con, :wis, :int
 
@@ -54,18 +86,18 @@ module Stattr
 
   	def initialize(name) # :notnew:
     	@name = name
-    	@stats = Statlist.new(10,10,10,10,10,10)
+    	@stats = StatList.new(10,10,10,10,10,10)
   	end #initialize 
 		
 		def self.roll_char(name)
       char = Charactersheet.new(name) 
-      char.stats = Statlist.new(
-      Dice.roll(DICE_SIDES, 3),
-      Dice.roll(DICE_SIDES, 3),
-      Dice.roll(DICE_SIDES, 3),
-      Dice.roll(DICE_SIDES, 3),
-      Dice.roll(DICE_SIDES, 3),
-      Dice.roll(DICE_SIDES, 3)
+      char.stats = StatList.new(
+      DiceRoll.new_roll(DICE_SIDES, 3),
+      DiceRoll.new_roll(DICE_SIDES, 3),
+      DiceRoll.new_roll(DICE_SIDES, 3),
+      DiceRoll.new_roll(DICE_SIDES, 3),
+      DiceRoll.new_roll(DICE_SIDES, 3),
+      DiceRoll.new_roll(DICE_SIDES, 3)
       )
 		  char	
 		end # self.roll_char
