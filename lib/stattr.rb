@@ -13,7 +13,6 @@ module Stattr
   class DiceRoll
 
     # @attribute sides [Integer] The number of sides the dice in this roll have.
-    #
     # @attribute count [Integer] The number of die being rolled.
     #
     attr_accessor :sides, :count
@@ -21,9 +20,7 @@ module Stattr
     # New instance of DiceRoll.
     #
     # @param [Integer] sides
-    #
     # @param [Integer] count
-    #
     # @return [Object] DiceRoll object
     #
     def initialize(sides=DICE_SIDES, count=1)
@@ -34,9 +31,7 @@ module Stattr
     # Roll a new die.
     #
     # @param [Integer] sides
-    #
     # @param [Integer] count
-    #
     # @return [Object] DiceRoll object
     #
     def self.new_roll(sides = DICE_SIDES, count=1)
@@ -72,15 +67,10 @@ module Stattr
     # Create a new Statlist.
     #
     # @param [Array] str
-    #
     # @param [Array] dex
-    #
     # @param [Array] cha
-    #
     # @param [Array] con
-    #
     # @param [Array] wis
-    #
     # @param [Array] int
     #
     def initialize(str=10, dex=10, cha=10, con=10, wis=10, int=10)
@@ -108,13 +98,11 @@ module Stattr
   class CharacterSheet
 
     # @attribute stats [Object] A StatList object
-    #
     # @attribute name [String] The Player Character's name
     #
     attr_accessor :stats, :name
 
     # new instance of CharacterSheet
-    #
     # @param [String] name
     #
     def initialize(name)
@@ -126,7 +114,6 @@ module Stattr
     # This is how you roll a brand new random character.
     #
     # @param [String] name
-    #
     # @return [Object] New Charactersheet
     #
     def self.roll_char(name)
@@ -148,9 +135,7 @@ module Stattr
   class Player
 
   # @attribute fname [String] The First Name of the Player
-  #
   # @attribute lname [String] The last Name of the Player
-  #
   # @attribute characters [Array] An array containing Charactersheet objects
   #
   attr_accessor :fname, :lname, :characters
@@ -158,7 +143,6 @@ module Stattr
     # Create new Player object
     #
     # @param [String] fname
-    #
     # @param [String] lname
     #
     def initialize(fname, lname)
@@ -176,5 +160,4 @@ module Stattr
       self.characters << new_char
     end #roll_char
   end #Player
-
 end #Stattr
