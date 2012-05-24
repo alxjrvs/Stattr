@@ -64,10 +64,10 @@ describe Stattr do
     end
   end
 
-  # The Charactersheet class
+  # The CharacterSheet class
   #
-  describe Stattr::Charactersheet do
-    subject { Stattr::Charactersheet }
+  describe Stattr::CharacterSheet do
+    subject { Stattr::CharacterSheet }
 
     it "should be initialized with a name" do
       s('Gimli').name.must_equal 'Gimli'
