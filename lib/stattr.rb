@@ -8,6 +8,11 @@ module Stattr
   #
   DICE_SIDES = 6
 
+  # List of Stats
+  #
+  STATS = ["str", "con", "wis", "int", "cha", "dex"]
+
+
   # Represents a single instance of the result of a dice roll
   #
   class DiceRoll
@@ -60,27 +65,15 @@ module Stattr
   #
   class StatList
 
-    # A list of all stats. Currently locked into D+D style stats.
+    # Creates an attr_accessor for each stat in STAT
     #
-    attr_accessor :str, :dex, :cha, :con, :wis, :int
+    attr_accessor *STATS
 
-    # Create a new Statlist.
+    # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it 
     #
-    # @param [Array] str
-    # @param [Array] dex
-    # @param [Array] cha
-    # @param [Array] con
-    # @param [Array] wis
-    # @param [Array] int
-    #
-    def initialize(str=10, dex=10, cha=10, con=10, wis=10, int=10)
-      @str = modstat(str)
-      @dex = modstat(dex)
-      @cha = modstat(cha)
-      @con = modstat(con)
-      @wis = modstat(wis)
-      @int = modstat(int)
-    end #initialize
+    def initialize
+       STATS.each { |s| instance_variable_set("@#{s}", make_stat) }
+    end
 
     # Takes a given value of a stat and creates a D+D style modifier.
     #
@@ -91,6 +84,14 @@ module Stattr
       modlist = [r, modr]
       modlist
     end #modstat
+
+    # makes a Stat/mod combination
+    #
+    # @return [Array]
+    #
+    def make_stat
+      modstat(DiceRoll.new_roll(DICE_SIDES, 3))
+    end #make_stat
   end #StatList
 
   # CharacterSheet of a given PlayerCharacter.
@@ -108,7 +109,7 @@ module Stattr
     def initialize(name)
       @name = name
       # creates StatList object with '10' as a default for each.
-      @stats = StatList.new(10,10,10,10,10,10)
+      @stats = StatList.new
     end #initialize
 
     # This is how you roll a brand new random character.
@@ -118,15 +119,7 @@ module Stattr
     #
     def self.roll_char(name)
       char = CharacterSheet.new(name)
-      char.stats = StatList.new(
-      DiceRoll.new_roll(DICE_SIDES, 3),
-      DiceRoll.new_roll(DICE_SIDES, 3),
-      DiceRoll.new_roll(DICE_SIDES, 3),
-      DiceRoll.new_roll(DICE_SIDES, 3),
-      DiceRoll.new_roll(DICE_SIDES, 3),
-      DiceRoll.new_roll(DICE_SIDES, 3)
-      )
-      char
+      char.stats = StatList.new
     end # self.roll_char
   end #CharacterSheet
 
