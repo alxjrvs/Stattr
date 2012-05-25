@@ -29,7 +29,7 @@ module Stattr
     # @return [Object]
     #
     def self.make_stat
-      DiceRoll.new_roll(Game.dice_sides, Game.dice_num)
+      Stat.new(DiceRoll.new_roll(Game.dice_sides, Game.dice_num))
     end #make_stat
 
     # The list of stats for this game.
@@ -103,7 +103,7 @@ module Stattr
     # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it
     #
     def initialize
-       Game.stats.each { |s| instance_variable_set("@#{s}", Stat.new(Game.make_stat)) }
+       Game.stats.each { |s| instance_variable_set("@#{s}", Game.make_stat) }
     end #initialize
 
     # Allow manual setting of stats.
