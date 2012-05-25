@@ -66,12 +66,12 @@ class CharacterSheet
   end
 end
 
-class Stat
+#class Stat
 
-  def initialize(value)
-    @val = value
-  end
-end
+  #def initialize(value)
+    #@val = value
+  #end
+#end
 
 class TrainingProgram
 
