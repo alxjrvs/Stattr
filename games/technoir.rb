@@ -61,8 +61,9 @@ class CharacterSheet
     @verbs = StatList.new(1, list)
   end
 
-  def self.make_stat
-    list = self.programs.map { |p| p.verbs}.flatten
+  def use_push(r)
+    self.push -= 1
+    r.push += 1
   end
 end
 
