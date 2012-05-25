@@ -3,18 +3,6 @@ include Stattr
 
 Technoir = Game
 
-class StatList
-  attr_accessor *Technoir.stats
-  def initialize(val=1, list)
-    Technoir.stats.each  { |s| 
-    if list.include?(s)
-      instance_variable_set("@#{s}", Technoir.make_stat(list.count(s)))
-    else
-      instance_variable_set("@#{s}", Technoir.make_stat(val))
-    end
-    }
-  end
-end
 
 class Technoir
 
@@ -41,6 +29,19 @@ class Technoir
 
 # Remember this part for later
 # Technoir.training_programs.detect { |p| p.name == "Bodyguard" }
+  end
+end
+
+class StatList
+  attr_accessor *Technoir.stats
+  def initialize(val=1, list)
+    Technoir.stats.each  { |s| 
+      if list.include?(s)
+        instance_variable_set("@#{s}", Technoir.make_stat(val + list.count(s)))
+      else
+        instance_variable_set("@#{s}", Technoir.make_stat(val))
+      end
+    }
   end
 end
 
