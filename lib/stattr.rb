@@ -24,6 +24,10 @@ module Stattr
       3
     end #self.dice_num
 
+    def self.make_stat
+      DiceRoll.new_roll(Game.dice_sides, Game.dice_num)
+    end #make_stat
+
     # The list of stats for this game.
     #
     # @return [Array]
@@ -95,7 +99,7 @@ module Stattr
     # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it
     #
     def initialize
-       Game.stats.each { |s| instance_variable_set("@#{s}", make_stat) }
+       Game.stats.each { |s| instance_variable_set("@#{s}", Stat.new(Game.make_stat)) }
     end #initialize
 
     # Allow manual setting of stats.
@@ -103,27 +107,31 @@ module Stattr
     # @param [Attribute] stat
     # @param [Integer] val
     #
-    def set_stat(stat, val)
-      send "#{stat}=", modstat(val)
-    end
+    def set_stat(stat, value)
+      send "#{stat}=", modstat(value)
+    end #set_stat
+  end #StatList
 
+  class Stat
+    attr_accessor :val, :mod
+
+    def initialize(value)
+      @val= value
+      @mod= modstat(value)
+    end
     # Creates stat/mod array.
     #
     # @return [Array] modlist. [0] is the stat, [1] is the modifier.
     #
     def modstat(r)
       modr = ((r-10)/2).to_int
-      modlist = [r, modr]
     end #modstat
 
     # makes a Stat/mod combination
     #
     # @return [Array]
     #
-    def make_stat
-      modstat(DiceRoll.new_roll(Game.dice_sides, Game.dice_num))
-    end #make_stat
-  end #StatList
+  end #Stat
 
   # CharacterSheet of a given PlayerCharacter.
   #
