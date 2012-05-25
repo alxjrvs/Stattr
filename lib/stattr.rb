@@ -67,22 +67,32 @@ module Stattr
 
     # Creates an attr_accessor for each stat in STAT
     #
+    # @attribute STATS [Integer] any number of Stats.
+    #
     attr_accessor *STATS
 
-    # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it 
+    # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it
     #
     def initialize
        STATS.each { |s| instance_variable_set("@#{s}", make_stat) }
+    end #initialize
+
+    # Allow manual setting of stats.
+    #
+    # @param [Attribute] stat
+    # @param [Integer] val
+    #
+    def set_stat(stat, val)
+      send "#{stat}=", modstat(val)
     end
 
-    # Takes a given value of a stat and creates a D+D style modifier.
+    # Creates stat/mod array.
     #
     # @return [Array] modlist. [0] is the stat, [1] is the modifier.
     #
     def modstat(r)
       modr = ((r-10)/2).to_int
       modlist = [r, modr]
-      modlist
     end #modstat
 
     # makes a Stat/mod combination
