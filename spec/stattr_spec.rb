@@ -40,16 +40,16 @@ describe Stattr do
     end
   end
 
-  # The StatList class
+  # The Stat class
   #
-  describe Stattr::StatList do
-    subject { Stattr::StatList }
+  describe Stattr::Stat do
+    subject { Stattr::Stat }
 
     it "should be able to modstat" do
-      list =s
+      list = s(10)
 
-      list.modstat(10).must_equal [10, 0]
-      list.modstat(15).must_equal [15, 2]
+      list.modstat(10).must_equal 0
+      list.modstat(15).must_equal 2
     end
   end
 
@@ -62,7 +62,7 @@ describe Stattr do
       s('Gimli').name.must_equal 'Gimli'
     end
 
-    it "should have a default statlist with only 10's" do
+    it "should have stat values with only 10" do
       frodo = s('Frodo')
       frodo.stats.set_stat("str", 10)
       frodo.stats.set_stat("dex", 10)
@@ -71,23 +71,23 @@ describe Stattr do
       frodo.stats.set_stat("wis", 10)
       frodo.stats.set_stat("int", 10)
 
-      frodo.stats.str.must_equal [10, 0]
-      frodo.stats.dex.must_equal [10, 0]
-      frodo.stats.cha.must_equal [10, 0]
-      frodo.stats.con.must_equal [10, 0]
-      frodo.stats.wis.must_equal [10, 0]
-      frodo.stats.int.must_equal [10, 0]
+      frodo.stats.str.val.must_equal 10
+      frodo.stats.dex.val.must_equal 10
+      frodo.stats.cha.val.must_equal 10
+      frodo.stats.con.val.must_equal 10
+      frodo.stats.wis.val.must_equal 10
+      frodo.stats.int.val.must_equal 10
     end
 
     it "should be able to roll a character" do
       gandalf = subject.roll_char('Gandalf')
 
-      gandalf.stats.str.must_equal [18, 4]
-      gandalf.stats.dex.must_equal [18, 4]
-      gandalf.stats.cha.must_equal [18, 4]
-      gandalf.stats.con.must_equal [18, 4]
-      gandalf.stats.wis.must_equal [18, 4]
-      gandalf.stats.int.must_equal [18, 4]
+      gandalf.stats.str.val.must_equal 18
+      gandalf.stats.dex.val.must_equal 18
+      gandalf.stats.cha.val.must_equal 18
+      gandalf.stats.con.val.must_equal 18
+      gandalf.stats.wis.val.must_equal 18
+      gandalf.stats.int.val.must_equal 18
     end
   end
 
