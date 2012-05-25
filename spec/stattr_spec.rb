@@ -15,6 +15,24 @@ end
 #
 describe Stattr do
 
+  ## The Game Class
+  ##
+  #describe Stattr::Game do
+    #subject { Stattr::Game }
+
+    #it "should be six sides" do
+      #game = s
+      #self.dice_sides.must_equal 6
+    #end
+
+    #it "should change stats" do
+      #game = s
+      #game.stats.size.must_equal 6
+      #game.stats = ["nope", "yep", "buh"]
+      #game.stats.size.must_equal 3
+    #end
+  #end
+
   # The DiceRoll class
   #
   describe Stattr::DiceRoll do
