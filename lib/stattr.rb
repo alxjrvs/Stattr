@@ -118,7 +118,6 @@ module Stattr
     #
     def initialize(name)
       @name = name
-      # creates StatList object with '10' as a default for each.
       @stats = StatList.new
     end #initialize
 
@@ -130,6 +129,7 @@ module Stattr
     def self.roll_char(name)
       char = CharacterSheet.new(name)
       char.stats = StatList.new
+      char
     end # self.roll_char
   end #CharacterSheet
 
