@@ -203,6 +203,8 @@ module Stattr
     end #roll_char
   end #Player
 
+  # DM class extends player, fresh for modifying.
+  #
   class DM < Player
   end #DM
 end #Stattr
