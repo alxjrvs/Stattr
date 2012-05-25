@@ -24,17 +24,17 @@ describe Stattr do
       s.sides.must_equal 6
     end
 
-    it "should default to 1 die" do
-      s.count.must_equal 1
+    it "should default to 3 die" do
+      s.count.must_equal 3
     end
 
     it "should return a list or rolls" do
-      s.rolls.must_equal [6]
+      s.rolls.must_equal [6, 6, 6]
       s(20,2).rolls.must_equal [20,20]
     end
 
     it "should roll the maximum value when Kernel#rand() is stubbed" do
-      subject.new_roll.must_equal 6
+      subject.new_roll.must_equal 18
       subject.new_roll(6,2).must_equal 12
       subject.new_roll(20,2).must_equal 40
     end
