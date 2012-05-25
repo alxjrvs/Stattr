@@ -28,7 +28,7 @@ module Stattr
     #
     # @return [Object]
     #
-    def self.make_stat
+    def self.make_stat(val=1)
       Stat.new(DiceRoll.new_roll(Game.dice_sides, Game.dice_num))
     end #make_stat
 
