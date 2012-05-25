@@ -4,15 +4,24 @@
 
 module Stattr
 
-  # How many sides the most common die has - rewrite to fit your game.
-  #
-  DICE_SIDES = 6
+  ## How many sides the most common die has - rewrite to fit your game.
+  ##
+  #DICE_SIDES = 6
+  ## List of Stats
+  ##
+  #STATS = ["str", "con", "wis", "int", "cha", "dex"]
 
-  # List of Stats
-  #
-  STATS = ["str", "con", "wis", "int", "cha", "dex"]
-
-
+  class Game
+    def self.dice_sides
+      6
+    end
+    def self.dice_num
+      3
+    end
+    def self.stats
+    ["str", "con", "wis", "int", "cha", "dex"]
+    end
+  end
   # Represents a single instance of the result of a dice roll
   #
   class DiceRoll
@@ -28,7 +37,8 @@ module Stattr
     # @param [Integer] count
     # @return [Object] DiceRoll object
     #
-    def initialize(sides=DICE_SIDES, count=1)
+    #def initialize(sides=DICE_SIDES, count=1)
+    def initialize(sides=Game.dice_sides, count=Game.dice_num)
       @sides = sides
       @count = count
     end #initialize
@@ -39,7 +49,7 @@ module Stattr
     # @param [Integer] count
     # @return [Object] DiceRoll object
     #
-    def self.new_roll(sides = DICE_SIDES, count=1)
+    def self.new_roll(sides = Game.dice_sides, count=Game.dice_num)
       # make a new dice object, then roll it.
       new(sides, count).roll
     end #self.roll
@@ -69,12 +79,12 @@ module Stattr
     #
     # @attribute STATS [Integer] any number of Stats.
     #
-    attr_accessor *STATS
+    attr_accessor *Game.stats
 
     # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it
     #
     def initialize
-       STATS.each { |s| instance_variable_set("@#{s}", make_stat) }
+       Game.stats.each { |s| instance_variable_set("@#{s}", make_stat) }
     end #initialize
 
     # Allow manual setting of stats.
@@ -100,7 +110,7 @@ module Stattr
     # @return [Array]
     #
     def make_stat
-      modstat(DiceRoll.new_roll(DICE_SIDES, 3))
+      modstat(DiceRoll.new_roll(Game.dice_sides, Game.dice_num))
     end #make_stat
   end #StatList
 
