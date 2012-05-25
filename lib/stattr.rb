@@ -4,24 +4,35 @@
 
 module Stattr
 
-  ## How many sides the most common die has - rewrite to fit your game.
-  ##
-  #DICE_SIDES = 6
-  ## List of Stats
-  ##
-  #STATS = ["str", "con", "wis", "int", "cha", "dex"]
-
+  # The Class that defines, in other applications, the "rules" of that game - the stats, the  sides of a given die, and so on.
+  #
   class Game
+
+    # How many sides the generating dice have in this game.
+    #
+    # @return [Integer]
+    #
     def self.dice_sides
       6
-    end
+    end #self.dice_sides
+
+    # The number of dice required to create a stat in this game
+    #
+    # @return [Integer]
+    #
     def self.dice_num
       3
-    end
+    end #self.dice_num
+
+    # The list of stats for this game.
+    #
+    # @return [Array]
+    #
     def self.stats
-    ["str", "con", "wis", "int", "cha", "dex"]
-    end
-  end
+      ["str", "con", "wis", "int", "cha", "dex"]
+    end #self.stats
+  end #Game
+
   # Represents a single instance of the result of a dice roll
   #
   class DiceRoll
