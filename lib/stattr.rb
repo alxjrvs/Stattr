@@ -24,6 +24,10 @@ module Stattr
       3
     end #self.dice_num
 
+    # The math for generating a stat.
+    #
+    # @return [Object]
+    #
     def self.make_stat
       DiceRoll.new_roll(Game.dice_sides, Game.dice_num)
     end #make_stat
@@ -108,11 +112,17 @@ module Stattr
     # @param [Integer] val
     #
     def set_stat(stat, value)
-      send "#{stat}=", modstat(value)
+      send "#{stat}=", Stat.new(value)
     end #set_stat
   end #StatList
 
+  #  Representing a stat in a game.
+  #
   class Stat
+
+    # @attribute val [Integer] The value of the stat
+    # @attribute mod [Integer] The Calculated modifier of the stat
+    #
     attr_accessor :val, :mod
 
     def initialize(value)
@@ -121,7 +131,7 @@ module Stattr
     end
     # Creates stat/mod array.
     #
-    # @return [Array] modlist. [0] is the stat, [1] is the modifier.
+    # @return [Integer] modlist. Returns the modifier. 
     #
     def modstat(r)
       modr = ((r-10)/2).to_int
