@@ -45,19 +45,8 @@ describe Stattr do
   describe Stattr::StatList do
     subject { Stattr::StatList }
 
-    it "should initialize the list of stats in the correct order" do
-      list = s(1,2,3,4,5,6)
-
-      list.str.must_equal [1, -5]
-      list.dex.must_equal [2, -4]
-      list.cha.must_equal [3, -4]
-      list.con.must_equal [4, -3]
-      list.wis.must_equal [5, -3]
-      list.int.must_equal [6, -2]
-    end
-
     it "should be able to modstat" do
-      list = s(6,5,4,3,2,1)
+      list =s
 
       list.modstat(10).must_equal [10, 0]
       list.modstat(15).must_equal [15, 2]
@@ -75,6 +64,12 @@ describe Stattr do
 
     it "should have a default statlist with only 10's" do
       frodo = s('Frodo')
+      frodo.stats.set_stat("str", 10)
+      frodo.stats.set_stat("dex", 10)
+      frodo.stats.set_stat("cha", 10)
+      frodo.stats.set_stat("con", 10)
+      frodo.stats.set_stat("wis", 10)
+      frodo.stats.set_stat("int", 10)
 
       frodo.stats.str.must_equal [10, 0]
       frodo.stats.dex.must_equal [10, 0]
@@ -112,7 +107,7 @@ describe Stattr do
       player.new_char('Aragon')
 
       player.characters.count.must_equal 1
-      
+
       player.characters[0].name.must_equal 'Aragon'
     end
   end
