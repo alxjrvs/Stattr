@@ -202,4 +202,7 @@ module Stattr
       self.characters << new_char
     end #roll_char
   end #Player
+
+  class DM < Player
+  end #DM
 end #Stattr
