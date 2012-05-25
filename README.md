@@ -5,22 +5,12 @@
 
 Stattr is under the MIT Open Source License. For more information, see LICENSE.md.
 
-Currently updating to a more formal Doc structure. For now, the key elements:
 
-**Stattr::Dice** 
----------------
-A Class of objects representing dice. Calling Dice.roll(6, 3) will roll 3 six-sided dice. 
+**Made for All Games**
+======================
 
-**Stattr::Statlist** 
----------------------
-A class that generates a list of stats and modifiers, based currently on D+D rules. 
+The *Game* class is made for redefining the base mechanics of the game. As it stands, the Game defaults to D+D 4th edition rules - character creation is a result of rolling 3 six-sided dice. However, feel free to re-write and redefine this in any application you use - writing new "def stats" functions will let you change these defaults. 
 
-**Stattr::Playerchar**
-----------------------
-A class made for extending. It takes a name for an argument, and automatically generates a stat list.
 
-##ToDo
-========
-- use RDOC for legitimate documentation.
 
 -- By [Alxjrvs](http://alxjrvs.com "Alxjrvs") -- 
