@@ -1,9 +1,15 @@
 require './lib/stattr.rb'
+include Stattr
 
 module Technoir
-  include Stattr
 
-  class System
+	class Stat < Stattr::Stat
+		attr_accessor :val
+		def initialize(val) 
+			@val = val
+		end
+	end
+  class System < Stattr::System
     @stats = ["coax","fight","detect","hack", "move", "operate", "prowl", "shoot", "treat"]
 
     def self.make_stat(val)
@@ -28,7 +34,7 @@ module Technoir
 
   class StatList
     attr_accessor *System.stats
-    def initialize(val=1, list)
+    def initialize(val, list)
       System.stats.each  { |s|
         if list.include?(s)
           instance_variable_set("@#{s}", System.make_stat(val + list.count(s)))
