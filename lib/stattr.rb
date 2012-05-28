@@ -1,91 +1,212 @@
+# Stattr includes some basic functions that could be used in a Tabletop RPG application
+#
+# @author Alex Jarvis
+
 module Stattr
-  Normstats = ['STR', 'DEX', 'CHA', 'INT', 'WIS', 'CON'] 
-  
-  class Dice 
+
+  # The Class that defines, in other applications, the "rules" of that game - the stats, the  sides of a given die, and so on.
+  #
+  class System
+    @dice_sides = 6
+    @dice_num = 3
+    @stats = ["str", "con", "wis", "int", "cha", "dex"]
+    # How many sides the generating dice have in this game.
+    #
+    # @return [Integer]
+    #
+    def self.dice_sides
+      @dice_sides
+    end #self.dice_sides
+
+    # The number of dice required to create a stat in this game
+    #
+    # @return [Integer]
+    #
+    def self.dice_num
+      @dice_num
+    end #self.dice_num
+
+    # The math for generating a stat.
+    #
+    # @return [Object]
+    #
+    def self.make_stat(val=1)
+      Stat.new(DiceRoll.new_roll(System.dice_sides, System.dice_num))
+    end #make_stat
+
+    # The list of stats for this game.
+    #
+    # @return [Array]
+    #
+    def self.stats
+      @stats
+    end #self.stats
+  end #System
+
+  # Represents a single instance of the result of a dice roll
+  #
+  class DiceRoll
+
+    # @attribute sides [Integer] The number of sides the dice in this roll have.
+    # @attribute count [Integer] The number of die being rolled.
+    #
     attr_accessor :sides, :count
-    def initialize(sides=6, count=1)
+
+    # New instance of DiceRoll.
+    #
+    # @param [Integer] sides
+    # @param [Integer] count
+    # @return [Object] DiceRoll object
+    #
+    #def initialize(sides=DICE_SIDES, count=1)
+    def initialize(sides=System.dice_sides, count=System.dice_num)
       @sides = sides
       @count = count
-    end
+    end #initialize
 
-    def self.roll(sides=6, count=1)
+    # Roll a new die.
+    #
+    # @param [Integer] sides
+    # @param [Integer] count
+    # @return [Object] DiceRoll object
+    #
+    def self.new_roll(sides = System.dice_sides, count=System.dice_num)
+      # make a new dice object, then roll it.
       new(sides, count).roll
-    end  
+    end #self.roll
 
+    # From 1 to count, that many [sides] sided die.
+    #
+    # @return [Integer] Gives each outcome to Roll.
+    #
     def rolls
       (1..count).map { |d| rand(sides) + 1 }
-    end
+    end #rolls
 
+    # Adds the rolls from rolls together.
+    #
+    # @return [Integer] combined rolls
+    #
     def roll
       rolls.inject(0) { |total, d| total += d }
-    end  
-  end
+    end #roll
+  end #DiceRoll
 
-#This iterates through the Stat list and turns each stat into a key. It then rolls 3 d6's to get the starting value for that stat.
-	def statroll 
-  	stathash = {} 
-    	Normstats.each do |stat|
-      	stathash[stat] = modstat(Stattr::Dice.roll(6,3))
-    	end
-  	stathash
-	end
+  # Represents the list of Statistics that a player has.
+  #
+  class StatList
 
+    # Creates an attr_accessor for each stat in STAT
+    #
+    # @attribute STATS [Integer] any number of Stats.
+    #
+    attr_accessor *System.stats
 
-#Classes 
-# Extend these to increase the overall functionality of your app/game! 
+    # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it
+    #
+    def initialize
+       System.stats.each { |s| instance_variable_set("@#{s}", System.make_stat) }
+    end #initialize
 
+    # Allow manual setting of stats.
+    #
+    # @param [Attribute] stat
+    # @param [Integer] val
+    #
+    def set_stat(stat, value)
+      send "#{stat}=", Stat.new(value)
+    end #set_stat
+  end #StatList
 
-	class Statlist 
-		attr_accessor :str, :dex, :cha, :con, :wis, :int
-		@@sides = 6 
-		@@dicenum = 3 
-    def initialize 
-        @str = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @dex = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @cha = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @con = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @wis = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
-        @int = modstat(Stattr::Dice.roll(@@sides, @@dicenum))
+  #  Representing a stat in a game.
+  #
+  class Stat
+
+    # @attribute val [Integer] The value of the stat
+    # @attribute mod [Integer] The Calculated modifier of the stat
+    #
+    attr_accessor :val, :mod
+
+    def initialize(value)
+      @val= value
+      @mod= modstat(value)
     end
-  def modstat(r)
-	 	modlist = []
-  	  case r
-   		when 3
-      	modlist = [r, -4]
-    	when (4..5) 
-      	modlist = [r, -3]
-    	when (6..7)
-       	modlist = [r, -2]
-    	when (8..9)
-       	modlist = [r, -1]
-    	when (10..11)
-       	modlist = [r, 0]
-    	when (12..13)
-       	modlist = [r, 1]
-    	when (14..15)
-       	modlist = [r, 2]
-    	when (16..17)
-       	modlist = [r, 3]
-    	when 18
-       	modlist = [r, 4]
-   		else 
-        puts "nothing"
-    end
-		modlist
-	end
-end
+    # Creates stat/mod array.
+    #
+    # @return [Integer] modlist. Returns the modifier.
+    #
+    def modstat(r)
+      modr = ((r-10)/2).to_int
+    end #modstat
 
-	class Playerchar
-  	attr_accessor :stats, :name
+    # makes a Stat/mod combination
+    #
+    # @return [Array]
+    #
+  end #Stat
 
-  	def initialize(name) 
-    	@name = name
-    	@stats = Statlist.new
-  	end
-		
-		def new_rand
-		end
-	end
-end 
+  # CharacterSheet of a given PlayerCharacter.
+  #
+  class CharacterSheet
 
+    # @attribute stats [Object] A StatList object
+    # @attribute name [String] The Player Character's name
+    #
+    attr_accessor :stats, :name
 
+    # new instance of CharacterSheet
+    # @param [String] name
+    #
+    def initialize(name)
+      @name = name
+      @stats = StatList.new
+    end #initialize
+
+    # This is how you roll a brand new random character.
+    #
+    # @param [String] name
+    # @return [Object] New Charactersheet
+    #
+    def self.roll_char(name)
+      char = CharacterSheet.new(name)
+      char.stats = StatList.new
+      char
+    end # self.roll_char
+  end #CharacterSheet
+
+  # Player class represents a human, who may have multiple character sheets.
+  #
+  class Player
+
+  # @attribute fname [String] The First Name of the Player
+  # @attribute lname [String] The last Name of the Player
+  # @attribute characters [Array] An array containing Charactersheet objects
+  #
+  attr_accessor :fname, :lname, :characters
+
+    # Create new Player object
+    #
+    # @param [String] fname
+    # @param [String] lname
+    #
+    def initialize(fname, lname)
+      @fname = fname
+      @lname = lname
+      @characters = []
+    end #initialize
+
+    # Creates a new randomly generated character associated with Player
+    #
+    # @param [String] name
+    #
+    def new_char(name)
+      new_char = CharacterSheet.roll_char(name)
+      self.characters << new_char
+    end #roll_char
+  end #Player
+
+  # DM class extends player, fresh for modifying.
+  #
+  class DM < Player
+  end #DM
+end #Stattr
