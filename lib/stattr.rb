@@ -6,14 +6,16 @@ module Stattr
 
   # The Class that defines, in other applications, the "rules" of that game - the stats, the  sides of a given die, and so on.
   #
-  class Game
-
+  class System
+    @dice_sides = 6
+    @dice_num = 3
+    @stats = ["str", "con", "wis", "int", "cha", "dex"]
     # How many sides the generating dice have in this game.
     #
     # @return [Integer]
     #
     def self.dice_sides
-      6
+      @dice_sides
     end #self.dice_sides
 
     # The number of dice required to create a stat in this game
@@ -21,7 +23,7 @@ module Stattr
     # @return [Integer]
     #
     def self.dice_num
-      3
+      @dice_num
     end #self.dice_num
 
     # The math for generating a stat.
@@ -29,7 +31,7 @@ module Stattr
     # @return [Object]
     #
     def self.make_stat(val=1)
-      Stat.new(DiceRoll.new_roll(Game.dice_sides, Game.dice_num))
+      Stat.new(DiceRoll.new_roll(System.dice_sides, System.dice_num))
     end #make_stat
 
     # The list of stats for this game.
@@ -37,9 +39,9 @@ module Stattr
     # @return [Array]
     #
     def self.stats
-      ["str", "con", "wis", "int", "cha", "dex"]
+      @stats
     end #self.stats
-  end #Game
+  end #System
 
   # Represents a single instance of the result of a dice roll
   #
@@ -57,7 +59,7 @@ module Stattr
     # @return [Object] DiceRoll object
     #
     #def initialize(sides=DICE_SIDES, count=1)
-    def initialize(sides=Game.dice_sides, count=Game.dice_num)
+    def initialize(sides=System.dice_sides, count=System.dice_num)
       @sides = sides
       @count = count
     end #initialize
@@ -68,7 +70,7 @@ module Stattr
     # @param [Integer] count
     # @return [Object] DiceRoll object
     #
-    def self.new_roll(sides = Game.dice_sides, count=Game.dice_num)
+    def self.new_roll(sides = System.dice_sides, count=System.dice_num)
       # make a new dice object, then roll it.
       new(sides, count).roll
     end #self.roll
@@ -98,12 +100,12 @@ module Stattr
     #
     # @attribute STATS [Integer] any number of Stats.
     #
-    attr_accessor *Game.stats
+    attr_accessor *System.stats
 
     # Creates a new StatList object. each stat in STAT is an attribute, with the result of makestat assigned to it
     #
     def initialize
-       Game.stats.each { |s| instance_variable_set("@#{s}", Game.make_stat) }
+       System.stats.each { |s| instance_variable_set("@#{s}", System.make_stat) }
     end #initialize
 
     # Allow manual setting of stats.
@@ -131,7 +133,7 @@ module Stattr
     end
     # Creates stat/mod array.
     #
-    # @return [Integer] modlist. Returns the modifier. 
+    # @return [Integer] modlist. Returns the modifier.
     #
     def modstat(r)
       modr = ((r-10)/2).to_int
