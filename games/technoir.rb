@@ -3,12 +3,14 @@ require './lib/stattr.rb'
 module Technoir
   include Stattr
 
-  class System
+  class System < Stattr::System
     @stats = ["coax","fight","detect","hack", "move", "operate", "prowl", "shoot", "treat"]
+    @dice_sides = 6
 
     def self.make_stat(val)
       Stat.new(val)
     end
+
     def self.training_programs
       [
       TrainingProgram.new('Bodyguard', 'coax', 'fight', 'treat'),
@@ -42,6 +44,8 @@ module Technoir
   class Push < DiceRoll
   end
 
+  class Stat < Stattr:: Stat
+  end
 
   class CharacterSheet
 
@@ -49,15 +53,19 @@ module Technoir
 
     def initialize (name, tp1, tp2, tp3, *adj)
       @push = 2
-      @adj = adj.map { |a| PosAdj.new(a, true, 0)}
+      @adj = adj.map { |a| Adjective.new(a, true, 0)}
       @programs = [tp1, tp2, tp3]
-      list = self.programs.map { |p| p.verbs}.flatten
+      list = @programs.map { |p| p.verbs}.flatten
       @verbs = StatList.new(1, list)
     end
 
     def use_push(r)
       self.push -= 1
       r.push += 1
+    end
+
+    def add_adj(a,pos,status)
+      @adj << Adjective.new(a,pos,status)
     end
   end
 
@@ -74,17 +82,7 @@ module Technoir
 
   class Adjective
     attr_accessor :name, :positive, :status
-  end
-
-  class NegAdj < Adjective
-    def initialize(name, positive = neg, status=0)
-      @name = name
-      @positive = positive
-      @status = status
-    end
-  end
-  class PosAdj < Adjective
-    def initialize(name, positive = true,status=0)
+    def initialize(name, positive = true, status=0)
       @name = name
       @positive = positive
       @status = status
