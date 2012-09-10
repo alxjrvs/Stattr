@@ -14,6 +14,8 @@ tmp
 
 *.*.swp
 
+*.*.swo
+
 # YARD artifacts
 .yardoc
 _yardoc

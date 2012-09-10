@@ -7,31 +7,15 @@ module Stattr
   # The Class that defines, in other applications, the "rules" of that game - the stats, the  sides of a given die, and so on.
   #
   class System
-    @dice_sides = 6
     @dice_num = 3
     @stats = ["str", "con", "wis", "int", "cha", "dex"]
-    # How many sides the generating dice have in this game.
-    #
-    # @return [Integer]
-    #
-    def self.dice_sides
-      @dice_sides
-    end #self.dice_sides
-
-    # The number of dice required to create a stat in this game
-    #
-    # @return [Integer]
-    #
-    def self.dice_num
-      @dice_num
-    end #self.dice_num
 
     # The math for generating a stat.
     #
     # @return [Object]
     #
     def self.make_stat(val=1)
-      Stat.new(DiceRoll.new_roll(System.dice_sides, System.dice_num))
+      Stat.new(Rollr::D6.roll(3))
     end #make_stat
 
     # The list of stats for this game.
@@ -43,57 +27,7 @@ module Stattr
     end #self.stats
   end #System
 
-  # Represents a single instance of the result of a dice roll
-  #
-  class DiceRoll
-
-    # @attribute sides [Integer] The number of sides the dice in this roll have.
-    # @attribute count [Integer] The number of die being rolled.
-    #
-    attr_accessor :sides, :count
-
-    # New instance of DiceRoll.
-    #
-    # @param [Integer] sides
-    # @param [Integer] count
-    # @return [Object] DiceRoll object
-    #
-    #def initialize(sides=DICE_SIDES, count=1)
-    def initialize(sides=System.dice_sides, count=System.dice_num)
-      @sides = sides
-      @count = count
-    end #initialize
-
-    # Roll a new die.
-    #
-    # @param [Integer] sides
-    # @param [Integer] count
-    # @return [Object] DiceRoll object
-    #
-    def self.new_roll(sides = System.dice_sides, count=System.dice_num)
-      # make a new dice object, then roll it.
-      new(sides, count).roll
-    end #self.roll
-
-    # From 1 to count, that many [sides] sided die.
-    #
-    # @return [Integer] Gives each outcome to Roll.
-    #
-    def rolls
-      (1..count).map { |d| rand(sides) + 1 }
-    end #rolls
-
-    # Adds the rolls from rolls together.
-    #
-    # @return [Integer] combined rolls
-    #
-    def roll
-      rolls.inject(0) { |total, d| total += d }
-    end #roll
-  end #DiceRoll
-
-  # Represents the list of Statistics that a player has.
-  #
+  
   class StatList
 
     # Creates an attr_accessor for each stat in STAT

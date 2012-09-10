@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    rollr (0.0.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rollr
